@@ -7,7 +7,9 @@ import App from './App'
 import router from './router'
 // import axios from 'axios'
 import vueLazyLoad from 'vue-lazyload'
-
+// iView-UI组件
+import iView from 'iview'
+import 'iview/dist/styles/iview.css'
 // import 'common/border.css'
 import 'stylus/index.styl'
 
@@ -19,10 +21,10 @@ Vue.use(vueLazyLoad, {
   error: require('./assets/images/common/porduct-noshow.jpg'),
   loading: require('./assets/images/common/porduct-noshow.jpg')
 })
+Vue.use(iView)
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
   router,
-  components: { App },
-  template: '<App/>'
+  render: h => h(App)
 })
