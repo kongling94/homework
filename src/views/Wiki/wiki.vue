@@ -1,25 +1,18 @@
 <template>
   <div class="wiki">
-    <Header></Header>
-    <wiki-header :wikiLists="wiki_list"></wiki-header>
+    <!-- <Header :wikiLists="wiki_list"></Header> -->
     <wiki-content :wikiLists="wiki_list"></wiki-content>
-    <Footer></Footer>
   </div>
 </template>
 <script>
 import axios from 'axios'
 import { ERROR_ID } from 'api/config'
 import wikiContent from './wiki-content'
-import wikiHeader from './wiki-header'
-import Header from 'views/common/header'
-import Footer from 'views/common/footer'
+
 export default {
   name: 'wiki',
   components: {
-    wikiContent,
-    wikiHeader,
-    Header,
-    Footer
+    wikiContent
   },
   data () {
     return {
