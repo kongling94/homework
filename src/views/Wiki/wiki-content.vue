@@ -25,6 +25,10 @@
                     <p class="title">{{son.name}}</p>
                     <p class="desc">{{son.description}}</p>
                   </a>
+                  <div class="info-btns">
+                    <div>了解详情</div>
+                    <div>立即购买</div>
+                  </div>
                 </li>
               </ul>
             </div>
@@ -69,45 +73,45 @@ export default {
 @import '~stylus/variable'
 @import '~stylus/mixin'
 .wiki
-  margin-top 4.875rem /* 78/16 */
+  margin-top 78px
   background-color $color-background
   position relative
   .wiki-banner
-    height 16.0625rem /* 257/16 */
+    height 257px
     background url('~images/Wiki/Banner.png')
     position relative
     .info-wrap
       box-sizing border-box
-      width 75rem /* 1200/16 */
+      width 1200px
       color #fff
       height 100%
-      padding 6.0625rem /* 97/16 */
+      padding 97px
       margin 0 auto
       .banner-info
         position absolute
-        left 40.5rem /* 280/16 */
+        left 280px
         .title
-          font-size 1.625rem /* 26/16 */
-          margin-bottom 1.25rem /* 20/16 */
+          font-size 26px
+          margin-bottom 20px
         .desc
-          font-size 1rem /* 16/16 */
+          font-size 16px
   .wiki-container
-    width 75rem /* 1200/16 */
+    width 1200px
     margin 0 auto
-    padding-bottom 3.125rem /* 50/16 */
+    padding-bottom 50px
     .wiki-warp
-      margin-top 3.125rem /* 50/16 */
+      margin-top 50px
       .lists
-        margin-bottom 1.25rem /* 20/16 */
+        margin-bottom 20px
         .item-title
-          margin-bottom 0.625rem /* 10/16 */
-          height 2.625rem /* 42/16 */
-          line-height 2.625rem /* 42/16 */
+          margin-bottom 10px
+          height 42px
+          line-height 42px
           background-color $bg-color
           color #fff
           text-align left
-          padding-left 1.25rem /* 20/16 */
-          border-radius 0.3125rem /* 5/16 */
+          padding-left 20px
+          border-radius 5px
         .item-content
           width 100%
           height 100%
@@ -115,11 +119,13 @@ export default {
             overflow hidden
             li
               float left
-              width 15rem /* 240/16 */
-              height 16.75rem /* 268/16 */
+              width 240px
+              height 268px
+              position relative
+              overflow hidden
               background-color #fff
               box-sizing border-box
-              padding-bottom 2.125rem /* 34/16 */
+              padding-bottom 34px
               border($color-border)
               &:hover
                 box-shadow 0 0 38px rgba(255, 102, 0, 0.2) inset
@@ -133,18 +139,40 @@ export default {
                 display block
                 .title
                   color $bg-color
-                  font-size 1.0625rem /* 17/16 */
-                  margin-bottom 0.625rem /* 10/16 */
+                  font-size 16px
+                  margin-bottom 10px
                 .desc
                   font-size 13px
                 .img-block[lazy=loaded], .img-block[lazy=error], .img-block[lazy=loading]
                   width auto /* 200/16 */
-                  height 12.125rem /* 194/16 */
+                  height 194px
                   background-repeat no-repeat
                   background-size contain
                   background-position 50%
                   margin 0 auto
                   // vertical-align middle
-              &:hover .title
-                color $color-theme
+              &:hover
+                .title
+                  color $color-theme
+                .info-btns
+                  bottom 0
+                  transition 0.4s
+                  z-index 10
+              .info-btns
+                padding 10px 0
+                background-color #6c6c6c
+                position absolute
+                width 100%
+                bottom -52px
+                left 0
+                transition 0.4s
+                opacity 0.8
+                div
+                  display inline-block
+                  border-radius 4px
+                  height 30px
+                  line-height 20px
+                  background-color $color-theme
+                  color #fff
+                  padding 5px 10px
 </style>

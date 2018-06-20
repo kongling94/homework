@@ -77,41 +77,41 @@ export default {
 @import '~stylus/mixin'
 .wiki-header
   width 100%
-  height 14.375rem /* 230/16 */
+  height 230px
   // line-height 14.375rem /* 230/16 */
   box-sizing border-box
   background-color #f0f0f0
   overflow hidden
   .wikiheader-container
     box-sizing border-box
-    width 75rem /* 1200/16 */
+    width 1200px
     height 100%
     margin 0 auto
-    padding 1.875rem 0 /* 30/16 */
-    padding-left 7.1875rem /* 115/16 */
+    padding 30px 0 /* 30/16 */
+    padding-left 115px
     text-align left
     .wikiheader-lists
       float left
-      margin-right 3.6875rem /* 59/16 */
+      margin-right 359px
       .title
-        font-size 0.875rem /* 14/16 */
+        font-size 14px
         color #3c3c3c
         position relative
-        margin-bottom 1.125rem /* 18/16 */
+        margin-bottom 18px
         &::before
           content ''
           position absolute
           top 0
           left -7px
-          width 0.125rem /* 2/16 */
-          height 0.875rem // * 12/16 *//* 14/16 *//* 12/16 */
+          width 2px
+          height 14px
           line-height 1rem
           background-color #ff6600
       .list-item
         li
-          margin-bottom 0.75rem /* 12/16 */
+          margin-bottom 12px
         a
-          font-size 0.75rem /* 12/16 */
+          font-size 12px
           color #666
           &:hover
             color #ff6600
@@ -119,10 +119,10 @@ export default {
         margin-right 0
     .wikiheader-lists.aio
       .list-item
-        max-width 11.5rem /* 184/16 */
+        max-width 184px
         li
           &:nth-child(-n+8)
             display inline-block
             &:nth-child(even)
-              padding-left 1.375rem /* 22/16 */
+              padding-left 22px
 </style>
