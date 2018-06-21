@@ -29,8 +29,9 @@
                   <i class="bg-hover"></i>
                 </a>
               </li>
-              <li data-panel="#wiki-header">
-                <a href="">wiki文档
+              <li>
+                <a href=""
+                   data-panel="#wiki-header">wiki文档
                   <i class="bg-hover"></i>
                 </a>
               </li>
@@ -70,7 +71,8 @@
     </div>
     <div class="header-panel">
       <!-- <pro-header></pro-header> -->
-      <wiki-header id="wiki-header"></wiki-header>
+      <wiki-header id="wiki-header"
+                   class="isNone"></wiki-header>
     </div>
   </div>
 </template>
@@ -101,26 +103,52 @@ export default {
       this.isHeaderFixed = false
     },
     isShowPanelList () {
-      $('.nav-list li').bind('mouseover', function (e) {
-        if ($(this).attr('data-panel') === 'undefined') {
-          return
-        }
-        let target = $(this).attr('data-panel')
-        $(target).addClass('isShow')
+      let panel = $('.header-panel')
+      let activeTarget
+      let activeMenu
+      let timer
+      let mouseIn = false
+      panel.on('mouseenter', function (e) {
+        mouseIn = true
+      }).on('mouseleave', function (e) {
+        mouseIn = false
       })
-    },
-    isHidePanelList () {
-      $('.nav-list li').bind('mouseout', function (e) {
-        if ($(this).attr('data-panel') === 'undefined') {
-          return
-        }
-        let target = $(this).attr('data-panel')
-        $(target).removeClass('isShow')
+      $('.nav-bar').on('mouseenter', function (e) {
+        panel.show()
       })
+        .on('mouseleave', function (e) {
+          panel.hide()
+          if (activeMenu) {
+            activeMenu.removeClass('isShow')
+            activeMenu.addClass('isNone')
+            activeMenu = null
+          }
+        }).on('mouseenter', 'li', function (e) {
+          if (activeMenu) {
+            timer = setTimeout(function () {
+              if (mouseIn) {
+                return
+              }
+              activeMenu.removeClass('isShow')
+              activeMenu.addClass('isNone')
+              activeMenu = null
+              activeTarget = $(e.target)
+              activeMenu = $(activeTarget.attr('data-panel'))
+              activeMenu.removeClass('isNone')
+              activeMenu.addClass('isShow')
+            }, 300)
+          } else {
+            activeTarget = $(e.target)
+            activeMenu = $(activeTarget.attr('data-panel'))
+            activeMenu.removeClass('isNone')
+            activeMenu.addClass('isShow')
+          }
+        })
     }
   },
   mounted () {
     window.addEventListener('scroll', this.handelHeaderFixed)
+    this.isShowPanelList()
   },
   destroyed () {
     window.removeEventListener('scroll', this.handelHeaderFixed)
@@ -132,13 +160,15 @@ export default {
 @import '~stylus/mixin'
 .header
   // overflow hidden
+  position relative
   padding 0
   .header-nav
     color #fff
     z-index 100
-    position fixed
+    position absolute
+    top 0
+    left 0
     width 100%
-    font-size 0
     // transform translate3d(0, -60px, 0)
     .container
       width 1200px
@@ -162,6 +192,7 @@ export default {
           overflow hidden
           li
             float left
+            position relative
             a
               display block
               box-sizing border-box
@@ -170,7 +201,6 @@ export default {
               height 100%
               font-size 14px
               padding 0 20px
-              position relative
               i.bg-hover
                 position absolute
                 top 0
@@ -178,8 +208,8 @@ export default {
                 width 0
                 height 100%
                 margin-left 0
-                background-color #fff
-                opacity 0.25
+                background-color #000
+                opacity 0.1
             &:hover
               a
                 color #fff
@@ -199,27 +229,27 @@ export default {
     &.isFixed
       // border-bottom 1px solid #dadada
       // transform translate3d(0, 0px, 0)
+      position fixed
       box-shadow 0 2px 4px rgba(0, 0, 0, 0.04)
       background-image linear-gradient(#ff9800, #ff6600)
       transition background-image 0.6s cubic-bezier(0.165, 0.84, 0.44, 1) 0.6s, transform 0.3s cubic-bezier(0.165, 0.84, 0.44, 1), -webkit-transform 0.3s cubic-bezier(0.165, 0.84, 0.44, 1)
   .header-panel
-    // display none
-    >div
-      position absolute
+    position fixed
+    padding-top 70px
+    top 0
+    left 0
+    right 0
+    z-index 99
+    display none
+    >div.isNone
       opacity 0
       visibility hidden
       transform translate3d(0, -230px, 0)
       transition all 0.3s ease
-    .isShow
-      opacity 1
-      position fixed
-      z-index 100
-      top 0
-      left 0
-      right 0
-      bottom 0
+    >div.isShow
       visibility visible
-      box-shadow inset 0 1px 0 rgba(0, 0, 0, 0.1), 0 2px 8px rgba(0, 0, 0, 0.16)
-      transform translate3d(0, 70px, 0)
+      opacity 1
+      transform translate3d(0, 0, 0)
       transition all 0.3s ease
+      box-shadow inset 0 1px 0 rgba(0, 0, 0, 0.1), 0 2px 8px rgba(0, 0, 0, 0.16)
 </style>
