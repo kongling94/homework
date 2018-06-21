@@ -1,5 +1,8 @@
 <template>
-  <div v-if="wikiLists">
+  <div v-loading='!wikiLists'
+       element-loading-text="拼命加载中"
+       element-loading-spinner="el-icon-loading"
+       element-loading-background="rgba(0, 0, 0, 0.8)">
     <div class="wiki">
       <div class="wiki-banner">
         <div class="info-wrap">
@@ -63,7 +66,7 @@ export default {
           wikiContent.push(this.wikiLists[i])
         }
       }
-      console.log(wikiContent)
+      // console.log(wikiContent)
       return wikiContent
     }
   }
@@ -73,7 +76,7 @@ export default {
 @import '~stylus/variable'
 @import '~stylus/mixin'
 .wiki
-  margin-top 78px
+  // margin-top 78px
   background-color $color-background
   position relative
   .wiki-banner
@@ -156,23 +159,26 @@ export default {
                   color $color-theme
                 .info-btns
                   bottom 0
-                  transition 0.4s
+                  transition all 0.3s ease 0s
                   z-index 10
               .info-btns
                 padding 10px 0
                 background-color #6c6c6c
                 position absolute
                 width 100%
-                bottom -52px
+                bottom -60px
                 left 0
-                transition 0.4s
+                transition all 0.3s ease 0s
                 opacity 0.8
                 div
                   display inline-block
                   border-radius 4px
-                  height 30px
+                  height 20px
+                  font-size 14px
                   line-height 20px
                   background-color $color-theme
                   color #fff
-                  padding 5px 10px
+                  padding 5px
+                  &:first-child
+                    margin-right 10px
 </style>

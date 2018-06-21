@@ -7,12 +7,15 @@ import App from './App'
 import router from './router'
 // import axios from 'axios'
 import vueLazyLoad from 'vue-lazyload'
-// iView-UI组件
-import iView from 'iview'
-import 'iview/dist/styles/iview.css'
+// 引入vue-amap
+import VueAMap from 'vue-amap'
+// ElementUI组件
+import ElementUI from 'element-ui'
+import 'element-ui/lib/theme-chalk/index.css'
 // import 'common/border.css'
 import 'stylus/index.styl'
-
+// 引入JQuery
+import 'jquery'
 Vue.config.productionTip = false
 
 // 图片懒加载
@@ -21,13 +24,35 @@ Vue.use(vueLazyLoad, {
   error: require('./assets/images/common/porduct-noshow.jpg'),
   loading: require('./assets/images/common/porduct-noshow.jpg')
 })
-Vue.use(iView)
+// 挂载elementUI
+Vue.use(ElementUI)
+Vue.use(VueAMap)
+
+VueAMap.initAMapApiLoader({
+  // 高德的key
+  key: '3d222a3955ba404bdb4875c88fb7f1a5',
+  // 插件集合
+  plugin: [
+    'AMap.Autocomplete',
+    'AMap.PlaceSearch',
+    'AMap.Scale',
+    'AMap.OverView',
+    'AMap.ToolBar',
+    'AMap.MapType',
+    'AMap.PolyEditor',
+    'AMap.CircleEditor'
+  ],
+  // 高德 sdk 版本，默认为 1.4.4
+  v: '1.4.4'
+})
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
   router,
-  template: '<App/>',
-  components: {
-    App
-  }
+  render: h => h(App)
+  // template: '<App/>',
+  // components: {
+  //   App
+  // }
 })

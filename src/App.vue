@@ -2,22 +2,28 @@
   <div id="app">
     <Header></Header>
     <Swiper></Swiper>
+    <Advertise></Advertise>
     <!-- <img src="./assets/logo.png"> -->
-    <router-view/>
+    <Wiki></Wiki>
+    <!-- <router-view/> -->
     <Footer></Footer>
   </div>
 </template>
 
 <script>
 import Header from 'views/common/header'
+import Advertise from 'views/common/advertise'
 import Swiper from 'views/common/swiper'
 import Footer from 'views/common/footer'
+import Wiki from 'views/Wiki/wiki'
 export default {
   name: 'App',
   components: {
     Header,
     Swiper,
-    Footer
+    Footer,
+    Wiki,
+    Advertise
   }
 }
 </script>
@@ -29,4 +35,6 @@ export default {
   -moz-osx-font-smoothing grayscale
   text-align center
   color #2c3e50
+  .el-main
+    padding 0
 </style>

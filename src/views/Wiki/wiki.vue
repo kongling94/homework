@@ -38,4 +38,6 @@ export default {
 }
 </script>
 <style lang="stylus" scoped>
+.wiki
+  font-size 0
 </style>
