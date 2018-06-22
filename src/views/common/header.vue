@@ -117,6 +117,7 @@ export default {
         panel.show()
       })
         .on('mouseleave', function (e) {
+          clearTimeout(timer)
           panel.hide()
           if (activeMenu) {
             activeMenu.removeClass('isShow')
@@ -124,25 +125,24 @@ export default {
             activeMenu = null
           }
         }).on('mouseenter', 'li', function (e) {
-          if (activeMenu) {
-            timer = setTimeout(function () {
-              if (mouseIn) {
-                return
-              }
-              activeMenu.removeClass('isShow')
-              activeMenu.addClass('isNone')
-              activeMenu = null
-              activeTarget = $(e.target)
-              activeMenu = $(activeTarget.attr('data-panel'))
-              activeMenu.removeClass('isNone')
-              activeMenu.addClass('isShow')
-            }, 300)
-          } else {
+          if (!activeMenu) {
             activeTarget = $(e.target)
             activeMenu = $(activeTarget.attr('data-panel'))
             activeMenu.removeClass('isNone')
             activeMenu.addClass('isShow')
           }
+          timer = setTimeout(function () {
+            if (mouseIn) {
+              return
+            }
+            activeMenu.removeClass('isShow')
+            activeMenu.addClass('isNone')
+            activeMenu = null
+            activeTarget = $(e.target)
+            activeMenu = $(activeTarget.attr('data-panel'))
+            activeMenu.removeClass('isNone')
+            activeMenu.addClass('isShow')
+          }, 200)
         })
     }
   },
@@ -164,7 +164,7 @@ export default {
   padding 0
   .header-nav
     color #fff
-    z-index 100
+    z-index 2100
     position absolute
     top 0
     left 0
@@ -239,7 +239,7 @@ export default {
     top 0
     left 0
     right 0
-    z-index 99
+    z-index 2099
     display none
     >div.isNone
       opacity 0

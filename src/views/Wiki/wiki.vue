@@ -20,13 +20,17 @@ export default {
     }
   },
   methods: {
+    // axios请求wiki内容
     _getWikiProducts () {
       axios.get('/api/getWikiPro').then((res) => {
         res = res.data
-        const data = res.data
-        if (data.error === ERROR_ID) {
-          this.wiki_list = data.info
+        if (res.code === '200') {
+          const data = res.data
+          if (data.error === ERROR_ID) {
+            this.wiki_list = data.info
+          }
         }
+        // res = res.data
       }).catch((err) => {
         console.log(err)
       })
@@ -38,6 +42,4 @@ export default {
 }
 </script>
 <style lang="stylus" scoped>
-.wiki
-  font-size 0
 </style>

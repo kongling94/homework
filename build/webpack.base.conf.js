@@ -21,21 +21,22 @@ const createLintingRule = () => ({
 })
 
 module.exports = {
-  context: path.resolve(__dirname, '../'),
+  context: path.resolve(__dirname, '../'), // 根目录
   entry: {
-    app: './src/main.js'
+    app: './src/main.js' // 入口文件
   },
   output: {
-    path: config.build.assetsRoot,
-    filename: '[name].js',
+    path: config.build.assetsRoot, // 打包输出目录
+    filename: '[name].js', // 保留原文件名
     publicPath:
-      process.env.NODE_ENV === 'production'
+      process.env.NODE_ENV === 'production' // 当生产环境时
         ? config.build.assetsPublicPath
         : config.dev.assetsPublicPath
   },
   resolve: {
-    extensions: ['.js', '.vue', '.json'],
+    extensions: ['.js', '.vue', '.json'], // 忽略后缀名
     alias: {
+      // 文件夹别名
       vue$: 'vue/dist/vue.esm.js',
       '@': resolve('src'),
       stylus: resolve('src/assets/stylus'),
@@ -45,8 +46,9 @@ module.exports = {
       api: resolve('src/api')
     }
   },
-  // 添加代码
+  // 插件
   plugins: [
+    // 引入JQuery
     new webpack.ProvidePlugin({
       $: 'jquery',
       jQuery: 'jquery',
@@ -54,6 +56,7 @@ module.exports = {
       'window.jQuery': 'jquery'
     })
   ],
+  // 模板解析
   module: {
     rules: [
       ...(config.dev.useEslint ? [createLintingRule()] : []),

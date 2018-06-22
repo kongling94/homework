@@ -1,9 +1,9 @@
 <template>
   <div v-loading='!wikiLists'
-       element-loading-text="拼命加载中"
+       element-loading-text="拼命加载中.."
        element-loading-spinner="el-icon-loading"
        element-loading-background="rgba(0, 0, 0, 0.8)">
-    <div class="wiki">
+    <div class="wiki-content">
       <div class="wiki-banner">
         <div class="info-wrap">
           <div class="banner-info">
@@ -28,10 +28,10 @@
                     <p class="title">{{son.name}}</p>
                     <p class="desc">{{son.description}}</p>
                   </a>
-                  <div class="info-btns">
+                  <!-- <div class="info-btns">
                     <div>了解详情</div>
                     <div>立即购买</div>
-                  </div>
+                  </div> -->
                 </li>
               </ul>
             </div>
@@ -75,16 +75,16 @@ export default {
 <style lang="stylus" scoped>
 @import '~stylus/variable'
 @import '~stylus/mixin'
-.wiki
+.wiki-content
   // margin-top 78px
   background-color $color-background
   position relative
   .wiki-banner
     height 257px
     background url('~images/Wiki/Banner.png')
-    position relative
     .info-wrap
       box-sizing border-box
+      position relative
       width 1200px
       color #fff
       height 100%

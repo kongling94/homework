@@ -5,13 +5,14 @@
 const path = require('path')
 
 module.exports = {
+  // 开发环境下的服务端
   dev: {
     // Paths
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: {
       '/api/getWikiPro': {
-        target: 'http://168.168.100.37/api/Nav/wiki_products_api', // 接口的域名
+        target: 'http://168.168.100.52/api/Nav/wiki_products_api', // 接口的域名
         // secure: false,  // 如果是https接口，需要配置这个参数
         changeOrigin: true, // 如果接口跨域，需要进行这个参数配置
         pathRewrite: {
@@ -55,10 +56,10 @@ module.exports = {
     // Template for index.html
     index: path.resolve(__dirname, '../dist/index.html'),
 
-    // Paths
+    // Paths 目录设置
     assetsRoot: path.resolve(__dirname, '../dist'),
     assetsSubDirectory: 'static',
-    assetsPublicPath: '/',
+    assetsPublicPath: './',
 
     /**
      * Source Maps

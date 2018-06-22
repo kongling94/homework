@@ -16,6 +16,10 @@ import 'element-ui/lib/theme-chalk/index.css'
 import 'stylus/index.styl'
 // 引入JQuery
 import 'jquery'
+
+// 引用API文件
+// import api from './api/api.js'
+
 Vue.config.productionTip = false
 
 // 图片懒加载
@@ -27,7 +31,8 @@ Vue.use(vueLazyLoad, {
 // 挂载elementUI
 Vue.use(ElementUI)
 Vue.use(VueAMap)
-
+// 将API方法绑定到全局
+// Vue.prototype.$api = api
 VueAMap.initAMapApiLoader({
   // 高德的key
   key: '3d222a3955ba404bdb4875c88fb7f1a5',
