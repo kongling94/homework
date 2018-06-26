@@ -1,6 +1,6 @@
 <template>
   <div class="wiki">
-    <!-- <Header :wikiLists="wiki_list"></Header> -->
+    <Header :headerNav="header_nav"></Header>
     <wiki-content :wikiLists="wiki_list"></wiki-content>
   </div>
 </template>
@@ -8,15 +8,21 @@
 import axios from 'axios'
 import { ERROR_ID } from 'api/config'
 import wikiContent from './wiki-content'
+import Header from 'views/common/header'
+// import wikiHeader from '../common/wiki-header'
+// import { baseUrl } from '../../../static/base.js'
 
 export default {
   name: 'wiki',
   components: {
-    wikiContent
+    wikiContent,
+    Header
+    // wikiHeader
   },
   data () {
     return {
-      wiki_list: ''
+      wiki_list: '',
+      header_nav: ''
     }
   },
   methods: {
@@ -24,13 +30,19 @@ export default {
     _getWikiProducts () {
       axios.get('/api/getWikiPro').then((res) => {
         res = res.data
-        if (res.code === '200') {
-          const data = res.data
-          if (data.error === ERROR_ID) {
-            this.wiki_list = data.info
-          }
+        const data = res.data
+        if (res.code === '200' && data.error === ERROR_ID) {
+          this.wiki_list = data.info
         }
         // res = res.data
+      }).catch((err) => {
+        console.log(err)
+      })
+    },
+    _getHeaderNav () {
+      axios.get('/api/getHeader').then((res) => {
+        res = res.data
+        this.header_nav = res
       }).catch((err) => {
         console.log(err)
       })
@@ -38,6 +50,7 @@ export default {
   },
   created () {
     this._getWikiProducts()
+    this._getHeaderNav()
   }
 }
 </script>

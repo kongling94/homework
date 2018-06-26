@@ -5,11 +5,11 @@ const webpack = require('webpack')
 const config = require('../config')
 const merge = require('webpack-merge')
 const baseWebpackConfig = require('./webpack.base.conf')
-const CopyWebpackPlugin = require('copy-webpack-plugin')
-const HtmlWebpackPlugin = require('html-webpack-plugin')
-const ExtractTextPlugin = require('extract-text-webpack-plugin')
-const OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin')
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
+const CopyWebpackPlugin = require('copy-webpack-plugin') // 静态资源打包
+const HtmlWebpackPlugin = require('html-webpack-plugin') // html文件的打包
+const ExtractTextPlugin = require('extract-text-webpack-plugin') // css文件的抽离
+const OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin') // css文件的压缩
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin') // JS文件的压缩
 
 const env = require('../config/prod.env')
 

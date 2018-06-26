@@ -12,13 +12,11 @@ import VueAMap from 'vue-amap'
 // ElementUI组件
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
+import 'element-ui/lib/theme-chalk/display.css'
 // import 'common/border.css'
 import 'stylus/index.styl'
 // 引入JQuery
 import 'jquery'
-
-// 引用API文件
-// import api from './api/api.js'
 
 Vue.config.productionTip = false
 

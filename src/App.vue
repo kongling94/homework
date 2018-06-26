@@ -1,12 +1,12 @@
 <template>
   <div id="app">
-    <Header></Header>
-    <Swiper></Swiper>
-    <Advertise></Advertise>
+    <!-- <Header></Header> -->
+    <!-- <Swiper></Swiper> -->
+    <!-- <Advertise></Advertise> -->
     <!-- <img src="./assets/logo.png"> -->
     <Wiki></Wiki>
     <!-- <router-view/> -->
-    <Footer></Footer>
+    <!-- <Footer></Footer> -->
   </div>
 </template>
 
@@ -29,12 +29,15 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
-#app
-  font-family 'Avenir', Helvetica, Arial, sans-serif
-  -webkit-font-smoothing antialiased
-  -moz-osx-font-smoothing grayscale
-  text-align center
-  color #2c3e50
-  .el-main
-    padding 0
+#app {
+  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+
+  .el-main {
+    padding: 0;
+  }
+}
 </style>

@@ -17,36 +17,20 @@
         <!-- 中间nav-bar主体 -->
         <el-col :span="18"
                 class="nav-bar">
-          <div>
+          <div class="hidden-md-and-down">
             <ul class="nav-list">
-              <li>
-                <a href="">产品中心
+              <li v-for="(item,index) in getHeader"
+                  :key="index">
+                <a :href="item.navhref"
+                   :data-panel="'#headernav'+index">{{item.navname}}
                   <i class="bg-hover"></i>
                 </a>
               </li>
-              <li>
-                <a href="">解决方案
-                  <i class="bg-hover"></i>
-                </a>
-              </li>
-              <li>
-                <a href=""
-                   data-panel="#wiki-header">wiki文档
-                  <i class="bg-hover"></i>
-                </a>
-              </li>
-              <li>
-                <a href="">下载固件
-                  <i class="bg-hover"></i>
-                </a>
-              </li>
-              <li>
-                <a href="">新闻中心
-                  <i class="bg-hover"></i>
-                </a>
-              </li>
-
             </ul>
+          </div>
+          <div class="nav-bar-btn hidden-lg-and-up">
+            <i class="el-icon-menu"
+               style="color:red"></i>
           </div>
         </el-col>
         <!-- 右侧login功能区 -->
@@ -70,10 +54,46 @@
       </el-row>
     </div>
     <div class="header-panel">
-      <!-- <pro-header></pro-header> -->
-      <wiki-header id="wiki-header"
-                   class="isNone"></wiki-header>
+      <div v-for="(item,index) in getHeader"
+           :key="index"
+           :id="'headernav'+index"
+           class="isNone panel"
+           v-if="item.nav_son.length != 0">
+        <div class="panel-container">
+          <div class="wikiheader-lists"
+               v-for="(val,key) in item.nav_son"
+               :key="key">
+            <div class="title"
+                 v-text="val.sec_navname"></div>
+            <ul v-if="val.sec_navname === '开源 · 行业主板'"
+                class="list-item aio">
+              <li v-for="(son,index) in val.sec_nav_son"
+                  :key="index">
+                <a :href="son.goods_link"
+                   v-text="son.name"></a>
+              </li>
+            </ul>
+            <ul v-else
+                class="list-item">
+              <li v-for="(son,index) in val.sec_nav_son"
+                  :key="index">
+                <a :href="son.goods_link"
+                   v-text="son.name"></a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div v-else></div>
     </div>
+    <div class="slider-menu hidden-lg-and-up">
+      <i class="el-icon-close close"></i>
+      <div class="menu-content"></div>
+    </div>
+
+    <!-- <wiki-header id="headernav2"
+                 class="isNone"></wiki-header> -->
+  </div>
   </div>
 </template>
 <script>
@@ -81,6 +101,9 @@ import wikiHeader from './wiki-header'
 // import ProHeader from './product-header'
 export default {
   name: 'common-header',
+  props: [
+    'headerNav'
+  ],
   data () {
     return {
       isHeaderFixed: false
@@ -89,6 +112,15 @@ export default {
   components: {
     wikiHeader
     // ProHeader
+  },
+  computed: {
+    getHeader () {
+      if (this.headerNav !== 'undefined') {
+        const headerList = this.headerNav.navmenu
+        // console.log(headerList)
+        return headerList
+      }
+    }
   },
   methods: {
     handelHeaderFixed () {
@@ -103,36 +135,40 @@ export default {
       this.isHeaderFixed = false
     },
     isShowPanelList () {
-      let panel = $('.header-panel')
+      let panel = $('.header-panel') // panel容器
       let activeTarget
       let activeMenu
       let timer
-      let mouseIn = false
+      let mouseInPanel = false
       panel.on('mouseenter', function (e) {
-        mouseIn = true
+        mouseInPanel = true
+        // console.log('1:' + mouseIn)
       }).on('mouseleave', function (e) {
-        mouseIn = false
+        mouseInPanel = false
+        if (activeMenu) {
+          activeMenu.removeClass('isShow')
+          activeMenu.addClass('isNone')
+        }
+        panel.hide()
       })
       $('.nav-bar').on('mouseenter', function (e) {
         panel.show()
       })
-        .on('mouseleave', function (e) {
-          clearTimeout(timer)
-          panel.hide()
-          if (activeMenu) {
-            activeMenu.removeClass('isShow')
-            activeMenu.addClass('isNone')
-            activeMenu = null
-          }
-        }).on('mouseenter', 'li', function (e) {
+        .on('mouseenter', 'li', function (e) {
+          // 如果当前没有展开的列表
           if (!activeMenu) {
             activeTarget = $(e.target)
             activeMenu = $(activeTarget.attr('data-panel'))
             activeMenu.removeClass('isNone')
             activeMenu.addClass('isShow')
           }
+          // 如果当前存在定时器
+          if (timer) {
+            clearTimeout(timer)
+          }
+
           timer = setTimeout(function () {
-            if (mouseIn) {
+            if (mouseInPanel) {
               return
             }
             activeMenu.removeClass('isShow')
@@ -160,32 +196,32 @@ export default {
 @import '~stylus/mixin'
 .header
   // overflow hidden
-  position relative
-  padding 0
+  // position relative
+  // padding: 0;
   .header-nav
     color #fff
     z-index 2100
-    position absolute
+    position relative
     top 0
     left 0
     width 100%
+    background-color #fff
     // transform translate3d(0, -60px, 0)
     .container
-      width 1200px
       margin 0 auto
       background-color transparent
-      height 70px
-      line-height 70px
+      height 78px
+      line-height 78px
       // background-color $color-theme
       // padding 0 20px
       font-size 14px
       .logo
-        margin-top 5px
-        margin-bottom 50px
-        width 50px
-        height 60px
-        bg-image('./nav_logo-t')
-        background-size 50px 60px
+        // margin-top: 5px;
+        // margin-bottom 50px
+        width 78px
+        height 78px
+        background url('./nlogo@2x.png') no-repeat center
+        background-size 78px 78px
       .nav-bar
         margin-left 30px
         .nav-list
@@ -196,7 +232,7 @@ export default {
             a
               display block
               box-sizing border-box
-              color #fff
+              color #666
               width 100%
               height 100%
               font-size 14px
@@ -212,12 +248,19 @@ export default {
                 opacity 0.1
             &:hover
               a
-                color #fff
+                color #ff6600
                 z-index 10
                 i.bg-hover
                   -webkit-transition all 0.3s ease-out
                   margin-left -50% /* ->50% */
                   width 100% /* ->100% */
+        .nav-bar-btn
+          text-align right
+          overflow hidden
+          i
+            font-size 24px
+            line-height 78px
+            color #555
       .login
         ul
           li
@@ -229,27 +272,115 @@ export default {
     &.isFixed
       // border-bottom 1px solid #dadada
       // transform translate3d(0, 0px, 0)
-      position fixed
+      position relative
       box-shadow 0 2px 4px rgba(0, 0, 0, 0.04)
-      background-image linear-gradient(#ff9800, #ff6600)
+      background-image #ccc
       transition background-image 0.6s cubic-bezier(0.165, 0.84, 0.44, 1) 0.6s, transform 0.3s cubic-bezier(0.165, 0.84, 0.44, 1), -webkit-transform 0.3s cubic-bezier(0.165, 0.84, 0.44, 1)
   .header-panel
-    position fixed
-    padding-top 70px
+    z-index 2099
+    height 230px
+    position absolute
     top 0
     left 0
     right 0
-    z-index 2099
-    display none
-    >div.isNone
+    bottom 0
+    >.panel.isNone
       opacity 0
       visibility hidden
+      // display none
+      background-color #f0f0f0
+      box-sizing border-box
       transform translate3d(0, -230px, 0)
-      transition all 0.3s ease
-    >div.isShow
+      transition all 0.3s ease-out
+    >.panel.isShow
       visibility visible
+      // display block
       opacity 1
-      transform translate3d(0, 0, 0)
-      transition all 0.3s ease
+      background-color #f0f0f0
+      box-sizing border-box
+      // padding-top: 70px;
+      transform translate3d(0, 70px, 0)
+      transition all 0.3s ease-out
       box-shadow inset 0 1px 0 rgba(0, 0, 0, 0.1), 0 2px 8px rgba(0, 0, 0, 0.16)
+    .panel
+      background-color #f0f0f0
+      box-sizing border-box
+      position absolute
+      top 0
+      left 0
+      right 0
+      .panel-container
+        box-sizing border-box
+        // width 1200px
+        // height 100%
+        margin 0 auto
+        padding 30px 0
+        padding-left 115px
+        text-align left
+        position relative
+        .wikiheader-lists
+          float left
+          margin-right 50px
+          .title
+            font-size 14px
+            color #3c3c3c
+            position relative
+            margin-bottom 18px
+            &::before
+              content ''
+              position absolute
+              top 0
+              left -7px
+              width 2px
+              height 14px
+              line-height 1rem
+              background-color #ff6600
+          .list-item
+            li
+              margin-bottom 12px
+              a
+                font-size 12px
+                color #666
+                &:hover
+                  color #ff6600
+          &:last-child
+            margin-right 0
+          .list-item.aio
+            max-width 184px
+            li
+              &:nth-child(-n+8)
+                display inline-block
+                &:nth-child(even)
+                  padding-left 22px
+  .slider-menu
+    max-width 400px
+    position fixed
+    top 0
+    right 0
+    width 100%
+    height 600px
+    background-color rgba(255, 255, 255, 0.9)
+    z-index 2200
+    transition all 0.3s ease 0s
+    .close
+      position absolute
+      right 10px
+      top 15px
+      font-size 24px
+    .menu-content
+      padding 50px 30px
+      width 100%
+      height 100%
+      box-sizing border-box
+      position absolute
+      top 0
+      margin-bottom 0
+      pointer-events auto
+      // background-color rgba(0, 0, 0, 0)
+@media screen and (min-width: 1200px)
+  .container, .panel-container
+    width 1200px
+@media screen and (max-width: 1200px)
+  .container, .panel-container
+    width 95%
 </style>

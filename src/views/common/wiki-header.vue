@@ -77,7 +77,7 @@ export default {
 @import '~stylus/mixin'
 .wiki-header
   width 100%
-  height 230px
+  // height 230px
   // line-height 14.375rem /* 230/16 */
   box-sizing border-box
   background-color #f0f0f0
@@ -92,7 +92,7 @@ export default {
     text-align left
     .wikiheader-lists
       float left
-      margin-right 359px
+      margin-right 50px
       .title
         font-size 14px
         color #3c3c3c

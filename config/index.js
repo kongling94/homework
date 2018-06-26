@@ -8,11 +8,21 @@ module.exports = {
   // 开发环境下的服务端
   dev: {
     // Paths
-    assetsSubDirectory: 'static',
+    assetsSubDirectory: './static',
     assetsPublicPath: '/',
     proxyTable: {
       '/api/getWikiPro': {
-        target: 'http://168.168.100.52/api/Nav/wiki_products_api', // 接口的域名
+        target:
+          'http://168.168.100.18/t_firefly_cn/public/api/Nav/wiki_products_api', // 接口process.env.API_ROOT +
+        // secure: false,  // 如果是https接口，需要配置这个参数
+        changeOrigin: true, // 如果接口跨域，需要进行这个参数配置
+        pathRewrite: {
+          '^/api': ''
+        }
+      },
+      '/api/getHeader': {
+        target:
+          'http://168.168.100.18/t_firefly_cn/public/api/Nav/Common_head_nav', // 接口process.env.API_ROOT +
         // secure: false,  // 如果是https接口，需要配置这个参数
         changeOrigin: true, // 如果接口跨域，需要进行这个参数配置
         pathRewrite: {
@@ -42,7 +52,7 @@ module.exports = {
      */
 
     // https://webpack.js.org/configuration/devtool/#development
-    devtool: 'cheap-module-eval-source-map',
+    devtool: 'cheap-module-eval-source-map', // 项目调试的方式
 
     // If you have problems debugging vue-files in devtools,
     // set this to false - it *may* help
@@ -51,14 +61,32 @@ module.exports = {
 
     cssSourceMap: true
   },
-
+  // 生产环境下
   build: {
     // Template for index.html
     index: path.resolve(__dirname, '../dist/index.html'),
 
     // Paths 目录设置
     assetsRoot: path.resolve(__dirname, '../dist'),
-    assetsSubDirectory: 'static',
+    assetsSubDirectory: './static',
+    // proxyTable: {
+    //   '/getWikiPro': {
+    //     target: 'http://168.168.100.18/api/Nav/wiki_products_api', // 接口process.env.API_ROOT +
+    //     // secure: false,  // 如果是https接口，需要配置这个参数
+    //     changeOrigin: true, // 如果接口跨域，需要进行这个参数配置
+    //     pathRewrite: {
+    //       '^/api': ''
+    //     }
+    //   },
+    //   '/getHeader': {
+    //     target: 'http://168.168.100.18/api/Nav/Common_head_nav', // 接口process.env.API_ROOT +
+    //     // secure: false,  // 如果是https接口，需要配置这个参数
+    //     changeOrigin: true, // 如果接口跨域，需要进行这个参数配置
+    //     pathRewrite: {
+    //       '^/api': ''
+    //     }
+    //   }
+    // },
     assetsPublicPath: './',
 
     /**

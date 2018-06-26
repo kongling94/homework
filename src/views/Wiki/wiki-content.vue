@@ -1,9 +1,7 @@
 <template>
-  <div v-loading='!wikiLists'
-       element-loading-text="拼命加载中.."
-       element-loading-spinner="el-icon-loading"
-       element-loading-background="rgba(0, 0, 0, 0.8)">
+  <div>
     <div class="wiki-content">
+      <!-- wiki banner -->
       <div class="wiki-banner">
         <div class="info-wrap">
           <div class="banner-info">
@@ -12,19 +10,26 @@
           </div>
         </div>
       </div>
+      <!-- wiki warp -->
       <div class="wiki-container">
         <div class="wiki-warp">
+          <!-- title -->
           <div class="lists"
                v-for="(item,index) in getContent"
                :key="index">
             <div class="item-title">{{item.name}}</div>
+            <!-- content -->
             <div class="item-content">
-              <ul>
-                <li v-for="son in item.son"
-                    :key="son.id">
-                  <a :href="son.href">
+              <el-row>
+                <el-col :xs="12"
+                        :sm="8"
+                        :md="5"
+                        v-for="son in item.son"
+                        :key="son.id">
+                  <a :href="son.wiki">
                     <div class="img-block"
-                         v-lazy:background-image=" defauly_host + son.more.thumbnail"></div>
+                         v-lazy:background-image=" defauly_host + son.more.thumbnail">
+                    </div>
                     <p class="title">{{son.name}}</p>
                     <p class="desc">{{son.description}}</p>
                   </a>
@@ -32,8 +37,8 @@
                     <div>了解详情</div>
                     <div>立即购买</div>
                   </div> -->
-                </li>
-              </ul>
+                </el-col>
+              </el-row>
             </div>
           </div>
         </div>
@@ -66,7 +71,6 @@ export default {
           wikiContent.push(this.wikiLists[i])
         }
       }
-      // console.log(wikiContent)
       return wikiContent
     }
   }
@@ -80,26 +84,31 @@ export default {
   background-color $color-background
   position relative
   .wiki-banner
-    height 257px
-    background url('~images/Wiki/Banner.png')
+    width 100%
+    height 100%
+    // padding-bottom 5%
+    background url('~images/Wiki/Banner.png') center no-repeat
+    background-size cover
     .info-wrap
       box-sizing border-box
       position relative
-      width 1200px
+      // width 1200px
       color #fff
       height 100%
       padding 97px
       margin 0 auto
       .banner-info
-        position absolute
-        left 280px
+        // position absolute
+        // left 280px
+        margin-left 5%
+        text-align left
         .title
           font-size 26px
           margin-bottom 20px
         .desc
           font-size 16px
   .wiki-container
-    width 1200px
+    // width 1200px
     margin 0 auto
     padding-bottom 50px
     .wiki-warp
@@ -117,17 +126,17 @@ export default {
           border-radius 5px
         .item-content
           width 100%
-          height 100%
-          ul
+          // height 100%
+          .el-row
             overflow hidden
-            li
-              float left
-              width 240px
+            .el-col
+              // float left
+              // width 100%
+              box-sizing border-box
               height 268px
               position relative
               overflow hidden
               background-color #fff
-              box-sizing border-box
               padding-bottom 34px
               border($color-border)
               &:hover
@@ -181,4 +190,13 @@ export default {
                   padding 5px
                   &:first-child
                     margin-right 10px
+@media only screen and (min-width: 992px)
+  .el-col-md-5
+    width 20%
+@media screen and (min-width: 1200px)
+  .wiki-container, .info-wrap
+    width 1200px
+@media screen and (max-width: 1200px)
+  .wiki-container, .info-wrap
+    width 96%
 </style>
