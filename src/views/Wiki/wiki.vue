@@ -5,8 +5,8 @@
   </div>
 </template>
 <script>
-import axios from 'axios'
-import { ERROR_ID } from 'api/config'
+
+// import { ERROR_ID } from 'api/config'
 import wikiContent from './wiki-content'
 import Header from 'views/common/header'
 // import wikiHeader from '../common/wiki-header'
@@ -21,30 +21,22 @@ export default {
   },
   data () {
     return {
-      wiki_list: '',
-      header_nav: ''
+      wiki_list: [],
+      header_nav: []
     }
   },
   methods: {
     // axios请求wiki内容
     _getWikiProducts () {
-      axios.get('/api/getWikiPro').then((res) => {
-        res = res.data
+      this.$api.get('/api/Nav/wiki_products_api', null, res => {
         const data = res.data
-        if (res.code === '200' && data.error === ERROR_ID) {
-          this.wiki_list = data.info
-        }
-        // res = res.data
-      }).catch((err) => {
-        console.log(err)
+        this.wiki_list = data.info
       })
     },
     _getHeaderNav () {
-      axios.get('/api/getHeader').then((res) => {
-        res = res.data
-        this.header_nav = res
-      }).catch((err) => {
-        console.log(err)
+      this.$api.get('/api/Nav/Common_head_nav', null, res => {
+        const data = res.data
+        this.header_nav = data.navmenu
       })
     }
   },

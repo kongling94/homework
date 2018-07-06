@@ -51,7 +51,7 @@ function apiAxios (method, url, params, success, failure) {
     withCredentials: false
   })
     .then(function (res) {
-      if (res.data.success === true) {
+      if (res.data.code === '200') {
         if (success) {
           success(res.data)
         }
@@ -59,14 +59,14 @@ function apiAxios (method, url, params, success, failure) {
         if (failure) {
           failure(res.data)
         } else {
-          window.alert('error: ' + JSON.stringify(res.data))
+          console.log('error: ' + JSON.stringify(res.data))
         }
       }
     })
     .catch(function (err) {
       let res = err.response
       if (err) {
-        window.alert('api error, HTTP CODE: ' + res.status)
+        console.log('api error, HTTP CODE: ' + res.status)
       }
     })
 }

@@ -12,10 +12,14 @@
       </div>
       <!-- wiki warp -->
       <div class="wiki-container">
-        <div class="wiki-warp">
+        <div class="wiki-warp"
+             v-loading='!wikiLists.length'
+             element-loading-text="拼命加载中"
+             element-loading-spinner="el-icon-loading"
+             element-loading-background="rgba(0, 0, 0, 0.8)">
           <!-- title -->
           <div class="lists"
-               v-for="(item,index) in getContent"
+               v-for="(item,index) in customOrder"
                :key="index">
             <div class="item-title">{{item.name}}</div>
             <!-- content -->
@@ -28,7 +32,8 @@
                         :key="son.id">
                   <a :href="son.wiki">
                     <div class="img-block"
-                         v-lazy:background-image=" defauly_host + son.more.thumbnail">
+                         :style="{'background-image': 'url(' + son.more.headerImg + ')'}">
+
                     </div>
                     <p class="title">{{son.name}}</p>
                     <p class="desc">{{son.description}}</p>
@@ -51,12 +56,14 @@
 
 export default {
   name: 'Wiki-content',
-  props: [
-    'wikiLists'
-  ],
+  props: {
+    wikiLists: {
+      type: Array
+    }
+  },
   data () {
     return {
-      defauly_host: 'http://www.t-firefly.com/upload/',
+      defauly_host: 'http://firefly.cn/upload/',
       banner: {
         title: '维基教程',
         desc: '学习、创新、协助'
@@ -64,14 +71,26 @@ export default {
     }
   },
   computed: {
-    getContent () {
-      const wikiContent = []
-      for (let i in this.wikiLists) {
-        if (this.wikiLists.hasOwnProperty(i)) {
-          wikiContent.push(this.wikiLists[i])
-        }
+    customOrder () {
+      let oldContentList = this.wikiLists
+      // 目标索引
+      let targetIndex
+      // 上一个数组索引
+      let preIndex
+      if (!targetIndex) {
+        $(oldContentList).each(function (i, v) {
+          if ($(this)[0].id === 39) {
+            preIndex = i
+          }
+          if ($(this)[0].id === 49) {
+            targetIndex = i
+          }
+        })
       }
-      return wikiContent
+      oldContentList.splice(preIndex, 0, oldContentList[targetIndex])
+      // 因为有插入元素，当前索引要+1
+      oldContentList.splice(targetIndex + 1, 1)
+      return oldContentList
     }
   }
 }
@@ -137,7 +156,7 @@ export default {
               position relative
               overflow hidden
               background-color #fff
-              padding-bottom 34px
+              // padding-bottom 34px
               border($color-border)
               &:hover
                 box-shadow 0 0 38px rgba(255, 102, 0, 0.2) inset
@@ -155,14 +174,13 @@ export default {
                   margin-bottom 10px
                 .desc
                   font-size 13px
-                .img-block[lazy=loaded], .img-block[lazy=error], .img-block[lazy=loading]
+                .img-block
                   width auto /* 200/16 */
                   height 194px
                   background-repeat no-repeat
                   background-size contain
                   background-position 50%
                   margin 0 auto
-                  // vertical-align middle
               &:hover
                 .title
                   color $color-theme
