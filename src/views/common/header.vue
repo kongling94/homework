@@ -44,15 +44,12 @@
             <li>
               <el-dropdown placement="bottom">
                 <span class="el-dropdown-link">
-                  <i class="iconfont icon-language"></i>
+                  <i class="iconfont icon-language"></i> 中
                 </span>
                 <el-dropdown-menu slot="dropdown"
                                   class="language_dropdown">
                   <el-dropdown-item>
-                    中文 / CN
-                  </el-dropdown-item>
-                  <el-dropdown-item>
-                    英文 / EN
+                    <a href="http://en.t-firefly.com/"></a>英文 / EN
                   </el-dropdown-item>
                 </el-dropdown-menu>
               </el-dropdown>
@@ -105,17 +102,19 @@
             </li>
             <!-- 搜索 -->
             <li class="search">
-              <!-- <i class="el-icon-search"></i> -->
-              <form class="search-form"
-                    method="post"
-                    action="{:cmf_url('doc/Search/index')}">
-                <el-input placeholder="请输入内容"
-                          prefix-icon="el-icon-search"
-                          v-model="keyword">
-                </el-input>
-              </form>
+              <div class="searchInput"
+                   ref="searchInput">
+                <i class="el-icon-search"
+                   @click="showSearchForm"
+                   ref="searchIcon">
+                </i>
+                <input placeholder="请输入内容"
+                       v-model="keyword"
+                       name="keyword"
+                       @keyup.enter="submitSearch">
+                </input>
+              </div>
             </li>
-
           </ul>
         </el-col>
       </el-row>
@@ -391,6 +390,22 @@ export default {
       $('.show-img img').attr('src', imgSrc)
       $('.show-img .desc').html(desc)
       $('.show-img .title').html(title)
+    },
+    showSearchForm () {
+      let searchInput = this.$refs.searchInput
+      $(searchInput).toggleClass('isShow')
+    },
+    submitSearch () {
+      // console.log(this.formData.keyword)
+      // this.$api.form('/doc/Search', this.formData, {
+      //   'headers': { 'Content-Type': 'application/x-www-form-urlencoded' }
+      // }, res => {
+      //   if (res.status === 200) {
+      //     console.log(res)
+      //   }
+      // })
+      let url = 'http://www.t-firefly.com/doc/Search?keyword=' + this.keyword
+      window.location.href = url
     }
   },
   watch: {
@@ -435,8 +450,6 @@ export default {
     this.isShowPanelList()
     this.handleResize()
   },
-  created () {
-  },
   destroyed () {
     window.removeEventListener('scroll', this.handelHeaderFixed)
   }
@@ -448,11 +461,6 @@ export default {
 .login_dropdown, .language_dropdown
   a
     color #666
-.header >>> .el-input
-  border none
-  .el-input__inner
-    &:focus
-      border-color #ff6600
 .header
   // overflow hidden
   // position relative
@@ -514,10 +522,10 @@ export default {
               a
                 color #ff6600
                 z-index 10
-                i.bg-hover
-                  -webkit-transition all 0.3s ease-out
-                  margin-left -50% /* ->50% */
-                  width 100% /* ->100% */
+                // i.bg-hover
+                //   -webkit-transition all 0.3s ease-out
+                //   margin-left -50% /* ->50% */
+                //   width 100% /* ->100% */
         .nav-bar-btn
           text-align right
           overflow hidden
@@ -535,6 +543,7 @@ export default {
             width 20%
             line-height 78px
             position relative
+            overflow hidden
             // &:first-child
             // width 40%
             .el-dropdown-link
@@ -545,6 +554,30 @@ export default {
               color #ff6600
             &.search
               width 60%
+              padding 24px 15px
+              box-sizing border-box
+              .searchInput
+                transform translateX(192px)
+                // border 1px solid #ff6600
+                height 30px
+                line-height 30px
+                width 100%
+                border-radius 4px
+                transition all 0.5s
+                .el-icon-search
+                  font-size 18px
+                  padding-left 0 5px
+                input
+                  height 30px
+                  outline none
+                  display inline-block
+                &.isShow
+                  transform translateX(0)
+                  border-width 1px
+                  border-style solid
+                  border-color #ff6600
+                  // transition border-color 0.2s cubic-bezier(0.645, 0.045, 0.355, 1)
+                  transition all 0.5s
     &.isFixed
       // border-bottom 1px solid #dadada
       // transform translate3d(0, 0px, 0)

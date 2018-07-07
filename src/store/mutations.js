@@ -8,6 +8,7 @@ const mutaions = {
       state.isLogin = true
       localStorage.setItem('userInfo', data.info)
       localStorage.setItem('isLogin', true)
+      return
     }
     state.isLogin = false
     localStorage.setItem('isLogin', false)

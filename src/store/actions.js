@@ -3,7 +3,7 @@ import axios from 'axios'
 const actions = {
   getUserInfo (context, data) {
     axios
-      .get('/api/checklogin')
+      .get('http://wiki.t-firefly.com/api/checklogin.php')
       .then(res => {
         context.commit('SET_LOGININFO', res.data)
       })
